@@ -13,20 +13,20 @@ export default React.createClass({
                 <h4> Raw Material Purchase </h4>
             </div>
             <div className='row panel'>
-                <div className='col-sm-3'>
+                <div className='col-sm-4'>
                     <span className='form-label pull-right'>Items: </span>
                 </div>
-                <div className=' col-sm-9 form-control-container'>
+                <div className=' col-sm-8 form-control-container'>
                     <select ref='rawItemsList'>
                         {this.getRawItemsList()}
                     </select>
                 </div>
             </div>
             <div className='row panel'>
-                <div className='col-sm-3'>
+                <div className='col-sm-4'>
                     <label className='form-label pull-right'>Qty: </label>
                 </div>
-                <div className=' col-sm-9'>
+                <div className=' col-sm-8'>
                     <input type='text' ref='qty' placeholder='Qty' defaultValue='1' />
                 </div>
             </div>
