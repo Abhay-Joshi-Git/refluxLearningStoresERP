@@ -17,7 +17,6 @@ export default Reflux.createStore({
     purchaseCompleted(purchaseDetails) {
         var item = rawItemsStore.getItem(purchaseDetails.itemId);
         var cost = item.cost * purchaseDetails.count;
-        console.log(purchaseDetails);
         totalPurchaseCost += cost;
         totalBalance -= cost;
         this.trigger('change', {totalBalance, totalPurchaseCost});
