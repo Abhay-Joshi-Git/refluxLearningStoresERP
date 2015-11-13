@@ -43,7 +43,7 @@ var purchaseComp = React.createClass({
                                                                      className='form-control'>{item.id}</option>)
     },
     purchaseHandler(inputEle) {
-        Actions.purchase({itemId: inputEle.refs.rawItemsList.value, count: inputEle.refs.qty.value});
+        Actions.purchase({itemId: inputEle.refs.rawItemsList.value, qty: parseInt(inputEle.refs.qty.value)});
     },
     checkBalance() {
         //var balance = accountsStore.getBalance();

@@ -1,8 +1,10 @@
 import React from 'react';
+import accountsStore from '../stores/accountsStore.js';
 import ProductCatalogueStore from '../stores/productsCatalogueStore.js';
+import Reflux from 'reflux';
 import Actions from '../actions.js';
 import InputComponentBuilder from './inputComponentBuilder.jsx';
-import ProductionStore from '../stores/productionStore.js';
+
 
 export default React.createClass({
     render() {
@@ -10,8 +12,8 @@ export default React.createClass({
     },
     getComponentProps() {
         return {
-            heading: 'Production Floor',
-                eleList: [
+            heading: 'Sales Desk',
+            eleList: [
                 {
                     label: 'Products',
                     eleType: 'select',
@@ -24,19 +26,19 @@ export default React.createClass({
                     eleType: 'input'
                 }
             ],
-                btns: [
+            btns: [
                 {
-                    refName: 'produce',
+                    refName: 'sellBtn',
                     primary: true,
-                    btnClickHandler: this.produce,
-                    label: 'Produce'
+                    btnClickHandler: this.sell,
+                    label: 'Sell'
                 }
             ],
             inputComp: this
         }
     },
-    produce(inputEle) {
-        Actions.produce({itemId: inputEle.refs.prdList.value, qty: parseInt(inputEle.refs.qty.value)});
+    sell(inputEle) {
+        Actions.sell({itemId: inputEle.refs.prdList.value, count: inputEle.refs.qty.value});
     },
     getProductsList() {
         return ProductCatalogueStore.getProducts().map(product => <option defaultValue={product.id} key={product.id} className='form-control'>{product.id}</option>);

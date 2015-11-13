@@ -14,7 +14,8 @@ var productsCatalogue = [
                 itemId: 'AlSheet',
                 qty: 1
             }
-        ]
+        ],
+        price: 800
     },
     {
         id: 'valves',
@@ -32,7 +33,8 @@ var productsCatalogue = [
                 itemId: 'plasticSheet',
                 qty: 1
             }
-        ]
+        ],
+        price: 700
     }
 ];
 
