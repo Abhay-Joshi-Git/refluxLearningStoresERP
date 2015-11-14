@@ -11,7 +11,7 @@ export default Reflux.createStore({
         var product = ProductCatalogue.getProduct(production.itemId);
         this.addItem(production.itemId, production.qty);
         Actions.productionCompleted(product.productionCost * production.qty,
-            product.rawMaterial.map(item => ({itemId: item.itemId, qty : item.qty * production.qty})));
+            product.rawMaterial.map(item => ({itemId: item.itemId, qty : item.qty * production.qty})), production);
         this.triggerChange();
     },
     addItem(itemId, qty) {
@@ -25,8 +25,23 @@ export default Reflux.createStore({
             })
         }
     },
+    removeItem(itemId, qty) {
+        var product = _.findWhere(products, {id: itemId});
+        if (product.count > qty) {
+            product.count -= qty;
+        } else {
+            _.remove(products, prd => prd.id === itemId);
+        }
+    },
     getProductsInfo() {
         return _.cloneDeep(products);
+    },
+    getProduct(itemId) {
+        return _.findWhere(this.getProductsInfo(), {id: itemId});
+    },
+    saleCompleted(sale) {
+        this.removeItem(sale.itemId, sale.count);
+        this.triggerChange();
     },
     triggerChange() {
         this.trigger('change', this.getProductsInfo());

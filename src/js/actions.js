@@ -5,5 +5,6 @@ export default Reflux.createActions([
     'purchaseCompleted',
     'produce',
     'sell',
-    'productionCompleted'
+    'productionCompleted',
+    'saleCompleted'
 ]);

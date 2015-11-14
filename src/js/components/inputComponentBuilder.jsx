@@ -15,10 +15,10 @@ export default React.createClass({
         if (this.props.btns) {
             return <div className='panel panel-btn pull-right'>
                 {this.props.btns.map(btn => <button
-                        ref={btn.refName}
-                        onClick={btn.btnClickHandler.bind(this.props.inputComp, that)}
-                        className={btn.primary ? 'btn btn-primary' : 'btn btn-default'}
-                        key={btn.label}>{btn.label}</button>)
+                    ref={btn.refName}
+                    onClick={btn.btnClickHandler.bind(this.props.inputComp, that)}
+                    className={'btn ' + (btn.primary ? 'btn-primary ' : 'btn-default ') + ('enabled' in btn ? (btn.enabled ? '' : 'disabled') : '')}
+                    key={btn.label}>{btn.label}</button>)
                 }
             </div>
         } else {
@@ -39,14 +39,17 @@ export default React.createClass({
         </div>
     },
     getInput(eleProps) {
-        var template;
+        var template, that = this;
         if (eleProps.eleType === 'select') {
-            template = <select ref={eleProps.refName}>
+            template = <select ref={eleProps.refName}
+                               onChange={eleProps.onChange ? eleProps.onChange.bind(this.props.inputComp, that) : null}>
                 {eleProps.getOptionsList()}
             </select>
         } else {
             template = <input type='text' ref={eleProps.refName} placeholder={eleProps.refName}
-                          defaultValue={eleProps.defaultValue || 1} />
+                              defaultValue={eleProps.defaultValue || 1}
+                              onChange={eleProps.onChange ? eleProps.onChange.bind(this.props.inputComp, that) : null}
+                />
         }
         return template;
     }

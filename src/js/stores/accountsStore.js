@@ -3,7 +3,7 @@ import actions from '../actions.js';
 import RawItemsCatalogue from './rawItemCatalogueStore.js';
 import ProductCatalogue from './productsCatalogueStore.js';
 
-var totalBalance = 100;
+var totalBalance = 150;
 var totalPurchaseCost = 0;
 
 
@@ -22,7 +22,7 @@ export default Reflux.createStore({
         totalBalance -= cost;
         this.triggerChange();
     },
-    sell(sale) {
+    saleCompleted(sale) {
         var product = ProductCatalogue.getProduct(sale.itemId);
         var price = product.price * sale.count;
         totalBalance += price;

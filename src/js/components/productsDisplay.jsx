@@ -18,11 +18,11 @@ export default React.createClass({
     render() {
         return <div className = 'panel panel-group module-container col-sm-12'>
             <div className='text-center'>
-                <h4> Raw Material Info </h4>
+                <h4> Finished Products Info </h4>
             </div>
             <div className='row panel'>
                 <div className='col-sm-6'>
-                    <label className='form-label pull-right'>Item </label>
+                    <label className='form-label pull-right'>Items </label>
                 </div>
                 <div className=' col-sm-6'>
                     <label className='form-label'>Count </label>
@@ -44,7 +44,7 @@ export default React.createClass({
                 </div>;
             });
         } else {
-            return <div className='panel'>No data</div>;
+            return <div className='panel text-center'>No data</div>;
         }
     }
 });

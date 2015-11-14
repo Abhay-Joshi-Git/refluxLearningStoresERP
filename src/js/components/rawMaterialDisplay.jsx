@@ -22,7 +22,7 @@ export default React.createClass({
             </div>
             <div className='row panel'>
                 <div className='col-sm-6'>
-                    <label className='form-label pull-right'>Item </label>
+                    <label className='form-label pull-right'>Items </label>
                 </div>
                 <div className=' col-sm-6'>
                     <label className='form-label'>Count </label>
@@ -44,7 +44,7 @@ export default React.createClass({
                 </div>;
             });
         } else {
-            return <div className='panel'>No data</div>;
+            return <div className='panel  text-center'>No data</div>;
         }
     }
 });

@@ -6,10 +6,41 @@ import Reflux from 'reflux';
 import Actions from '../actions.js';
 import InputComponentBuilder from './inputComponentBuilder.jsx';
 
-
 var purchaseComp = React.createClass({
+    mixins: [
+        Reflux.listenTo(accountsStore, 'onAccountStoreChange')
+    ],
+    onAccountStoreChange() {
+        this.setPurchaseEnabledState();
+    },
+    setPurchaseEnabledState() {
+        this.setState({
+            purchaseEnabled: this.checkBalanceSufficiency(this.state.selItem, this.state.qty)
+        })
+    },
+    checkBalanceSufficiency(selItem, qty) {
+        var balance = accountsStore.getBalance();
+        var rawMaterial = rawItemsCatalogueStore.getItem(selItem);
+        if (!rawMaterial) {
+            return false;
+        }
+        return (balance >= (rawMaterial.cost * qty));
+    },
+    onInputChange(inputEle) {
+        this.setState({
+            selItem: inputEle.refs.rawItemsList.value,
+            qty: inputEle.refs.qty.value
+        }, () => this.setPurchaseEnabledState())
+    },
     render() {
         return <InputComponentBuilder key='production' {...this.getComponentProps()}/>
+    },
+    getInitialState() {
+        return {
+            selItem: rawItemsCatalogueStore.getItems()[0].id,
+            qty: 1,
+            purchaseEnabled: true
+        }
     },
     getComponentProps() {
         return {
@@ -19,7 +50,8 @@ var purchaseComp = React.createClass({
                     label: 'Items',
                     eleType: 'select',
                     refName: 'rawItemsList',
-                    getOptionsList: this.getRawItemsList
+                    getOptionsList: this.getRawItemsList,
+                    onChange: this.onInputChange
                 },
                 {
                     label: 'Qty',
@@ -32,7 +64,8 @@ var purchaseComp = React.createClass({
                     refName: 'purchaseBtn',
                     primary: true,
                     btnClickHandler: this.purchaseHandler,
-                    label: 'Purchase'
+                    label: 'Purchase',
+                    enabled: this.state.purchaseEnabled
                 }
             ],
             inputComp: this
@@ -43,13 +76,9 @@ var purchaseComp = React.createClass({
                                                                      className='form-control'>{item.id}</option>)
     },
     purchaseHandler(inputEle) {
-        Actions.purchase({itemId: inputEle.refs.rawItemsList.value, qty: parseInt(inputEle.refs.qty.value)});
-    },
-    checkBalance() {
-        //var balance = accountsStore.getBalance();
-        //var rawItem = rawItemsCatalogueStore.getItem(selectedItem.itemId);
-        //var totalCost = rawItem.cost * qty;
-
+        if (this.state.purchaseEnabled) {
+            Actions.purchase({itemId: inputEle.refs.rawItemsList.value, qty: parseInt(inputEle.refs.qty.value)});
+        }
     }
 });
 
